@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order History - Foody</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8f9fa; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .header { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 600; color: #333; }
+        .back-btn { padding: 8px 16px; background: #6c757d; color: white; border: none; border-radius: 6px; text-decoration: none; }
+        .back-btn:hover { background: #5a6268; }
+        .order-card { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; overflow: hidden; }
+        .order-header { padding: 20px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+        .order-info { }
+        .order-id { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 5px; }
+        .order-date { color: #666; font-size: 14px; }
+        .order-status { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+        .status-placed { background: #fff3cd; color: #856404; }
+        .status-preparing { background: #d1ecf1; color: #0c5460; }
+        .status-out_for_delivery { background: #d4edda; color: #155724; }
+        .status-delivered { background: #d4edda; color: #155724; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+        .order-items { padding: 20px; }
+        .order-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f8f9fa; }
+        .order-item:last-child { border-bottom: none; }
+        .item-details { }
+        .item-name { font-weight: 600; color: #333; margin-bottom: 2px; }
+        .item-restaurant { color: #666; font-size: 14px; }
+        .item-quantity { color: #666; font-size: 14px; }
+        .item-price { font-weight: 600; color: #28a745; }
+        .order-total { padding: 20px; border-top: 1px solid #f0f0f0; background: #f8f9fa; }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .total-row.final { font-weight: 600; font-size: 18px; color: #333; border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px; }
+        .empty-state { text-align: center; padding: 60px 20px; color: #666; }
+        .empty-icon { font-size: 64px; margin-bottom: 20px; }
+        .empty-title { font-size: 24px; font-weight: 600; margin-bottom: 10px; }
+        .empty-text { font-size: 16px; margin-bottom: 30px; }
+        .btn { padding: 10px 20px; background: #e23744; color: white; border: none; border-radius: 6px; text-decoration: none; }
+        .btn:hover { background: #cb2d3e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="nav-bar">
+                <h1 class="logo">📋 Order History</h1>
+                <a th:href="@{'/customer/' + ${customer.id}}" class="back-btn">← Back to Menu</a>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(orders)}" class="empty-state">
+            <div class="empty-icon">📦</div>
+            <div class="empty-title">No orders yet!</div>
+            <div class="empty-text">Your order history will appear here once you place your first order.</div>
+            <a th:href="@{'/customer/' + ${customer.id}}" class="btn">Start Ordering</a>
+        </div>
+
+        <div th:each="order : ${orders}" class="order-card">
+            <div class="order-header">
+                <div class="order-info">
+                    <div class="order-id">Order #<span th:text="${order.id}"></span></div>
+                    <div class="order-date" th:text="${#temporals.format(order.orderTime, 'MMM dd, yyyy - hh:mm a')}"></div>
+                </div>
+                <div class="order-status" th:classappend="'status-' + ${#strings.toLowerCase(order.status)}" th:text="${order.status}"></div>
+            </div>
+            
+            <div class="order-items">
+                <div th:each="item : ${order.items}" class="order-item">
+                    <div class="item-details">
+                        <div class="item-name" th:text="${item.menuItem.name}"></div>
+                        <div class="item-restaurant" th:text="${item.menuItem.restaurant.name}"></div>
+                        <div class="item-quantity">Quantity: <span th:text="${item.quantity}"></span></div>
+                    </div>
+                    <div class="item-price">₹<span th:text="${#numbers.formatDecimal(item.menuItem.price * item.quantity, 1, 2)}"></span></div>
+                </div>
+            </div>
+            
+            <div class="order-total">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>₹<span th:text="${#numbers.formatDecimal(order.totalPrice, 1, 2)}"></span></span>
+                </div>
+                <div class="total-row">
+                    <span>Delivery Fee:</span>
+                    <span>₹<span th:text="${#numbers.formatDecimal(order.deliveryFee, 1, 2)}"></span></span>
+                </div>
+                <div class="total-row final">
+                    <span>Total:</span>
+                    <span>₹<span th:text="${#numbers.formatDecimal(order.finalTotal, 1, 2)}"></span></span>
+                </div>
+                <div style="margin-top: 10px; color: #666; font-size: 14px;">
+                    Payment: <span th:text="${order.paymentMethod}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

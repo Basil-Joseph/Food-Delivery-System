@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Confirmed!</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); min-height: 100vh; }
+        .container { max-width: 600px; margin: 50px auto; background: white; padding: 50px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); text-align: center; }
+        .success-icon { font-size: 100px; color: #28a745; margin-bottom: 30px; animation: bounce 1s ease-in-out; }
+        @keyframes bounce { 0%, 20%, 60%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 80% { transform: translateY(-10px); } }
+        h1 { color: #333; margin-bottom: 15px; font-size: 32px; }
+        .order-id { background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 20px 0; font-family: monospace; font-size: 18px; color: #495057; }
+        p { color: #666; font-size: 18px; margin-bottom: 30px; line-height: 1.6; }
+        .info-box { background: #e8f5e8; padding: 20px; border-radius: 10px; margin: 25px 0; border-left: 5px solid #28a745; }
+        .delivery-time { font-size: 24px; font-weight: bold; color: #e23744; margin: 20px 0; }
+        .buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; text-decoration: none; display: inline-block; transition: all 0.3s; font-weight: bold; }
+        .home-btn { background: #28a745; color: white; }
+        .home-btn:hover { background: #218838; transform: translateY(-2px); }
+        .track-btn { background: #e23744; color: white; }
+        .track-btn:hover { background: #c41e3a; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">🎉</div>
+        <h1>Order Confirmed!</h1>
+        
+        <div class="order-id">
+            Order ID: #FD<span id="orderId"></span>
+        </div>
+        
+        <p>Thank you for choosing our food delivery service! Your delicious meal is being prepared with care.</p>
+        
+        <div class="info-box">
+            <strong>📍 Delivery Address:</strong> Your registered address<br>
+            <strong>💳 Payment:</strong> Completed successfully<br>
+            <strong>📞 Contact:</strong> We'll call you if needed
+        </div>
+        
+        <div class="delivery-time">
+            ⏰ Estimated Delivery: 25-35 minutes
+        </div>
+        
+        <p>You will receive SMS updates about your order status. Our delivery partner will contact you before arrival.</p>
+        
+        <div class="buttons">
+            <a href="/" class="btn home-btn">🏠 Back to Home</a>
+            <a href="#" class="btn track-btn" onclick="alert('Order tracking feature coming soon!')">📱 Track Order</a>
+        </div>
+    </div>
+    
+    <script>
+        // Generate random order ID
+        document.getElementById('orderId').textContent = Math.floor(Math.random() * 900000) + 100000;
+    </script>
+</body>
+</html>

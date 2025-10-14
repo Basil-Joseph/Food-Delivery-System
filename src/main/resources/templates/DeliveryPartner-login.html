@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delivery Partner Module - Food Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; background: #f8fafc; min-height: 100vh; }
+        
+        .header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 20px 0; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 32px; font-weight: 700; color: #e23744; }
+        .nav-subtitle { color: #64748b; font-size: 14px; margin-top: 4px; }
+        
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 60px 40px; display: grid; grid-template-columns: 1fr 400px; gap: 80px; align-items: center; min-height: calc(100vh - 120px); }
+        
+        .hero-section { }
+        .hero-title { font-size: 48px; font-weight: 700; color: #1e293b; line-height: 1.1; margin-bottom: 24px; }
+        .hero-subtitle { font-size: 20px; color: #64748b; line-height: 1.6; margin-bottom: 32px; }
+        .hero-features { display: flex; flex-direction: column; gap: 16px; }
+        .feature-item { display: flex; align-items: center; gap: 12px; color: #475569; }
+        .feature-icon { width: 24px; height: 24px; background: #e23744; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600; }
+        
+        .login-section { background: white; border-radius: 16px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+        .login-header { text-align: center; margin-bottom: 32px; }
+        .login-title { font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+        .login-subtitle { color: #64748b; font-size: 15px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: #374151; font-size: 14px; }
+        .form-input { width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 15px; transition: all 0.2s; background: #f8fafc; }
+        .form-input:focus { outline: none; border-color: #e23744; background: white; box-shadow: 0 0 0 3px rgba(226,55,68,0.1); }
+        
+        .login-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #e23744, #ff6b6b); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-bottom: 24px; }
+        .login-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(226,55,68,0.3); }
+        
+        .signup-link { text-align: center; color: #64748b; font-size: 14px; }
+        .signup-link-btn { color: #e23744; cursor: pointer; font-weight: 600; text-decoration: none; }
+        .signup-link-btn:hover { text-decoration: underline; }
+        
+        .error-message { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; }
+        .success-message { background: #f0fdf4; border: 1px solid #bbf7d0; color: #16a34a; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; display: none; }
+        
+        /* Modal Styles */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; }
+        .modal.show { display: flex; animation: fadeIn 0.3s ease; }
+        .modal-content { background: white; border-radius: 16px; padding: 32px; width: 90%; max-width: 500px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
+        .modal-close { position: absolute; top: 20px; right: 24px; font-size: 24px; cursor: pointer; color: #9ca3af; transition: color 0.2s; }
+        .modal-close:hover { color: #e23744; }
+        .modal-title { font-size: 24px; font-weight: 700; color: #1e293b; margin-bottom: 8px; text-align: center; }
+        .modal-subtitle { color: #64748b; text-align: center; margin-bottom: 24px; font-size: 15px; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        @media (max-width: 768px) {
+            .main-container { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px; }
+            .hero-title { font-size: 36px; }
+            .hero-subtitle { font-size: 18px; }
+            .nav-container { padding: 0 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="nav-container">
+            <div>
+                <div class="logo">FOOD HUB</div>
+                <div class="nav-subtitle">Delivery Partner Module</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="hero-section">
+            <h1 class="hero-title">Become a Delivery Partner</h1>
+            <p class="hero-subtitle">Join our delivery network and earn money on your schedule. Flexible hours, competitive pay, and instant payouts.</p>
+            
+            <div class="hero-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🚗</div>
+                    <span>Flexible working hours - work when you want</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <span>Competitive earnings with instant payouts</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <span>Easy-to-use mobile app for order management</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <span>Real-time order tracking and navigation</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-section">
+            <div class="login-header">
+                <h2 class="login-title">Partner Login</h2>
+                <p class="login-subtitle">Access your delivery dashboard</p>
+            </div>
+            
+            <div th:if="${param.error}" class="error-message">
+                Invalid email or password. Please try again.
+            </div>
+            
+            <div class="success-message" id="successMessage"></div>
+            
+            <form action="/delivery-login" method="post">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" class="form-input" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-input" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Access Dashboard</button>
+            </form>
+            
+            <div class="signup-link">
+                New delivery partner? <span class="signup-link-btn" onclick="openSignupModal()">Join our team</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delivery Partner Signup Modal -->
+    <div id="signupModal" class="modal" onclick="closeModal(event, 'signupModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeSignupModal()">&times;</span>
+            <h2 class="modal-title">Join Food Hub</h2>
+            <p class="modal-subtitle">Register as a delivery partner and start earning</p>
+            
+            <div class="error-message" id="signupError" style="display: none;"></div>
+            <div class="success-message" id="signupSuccess"></div>
+            
+            <form id="signupForm" action="/delivery-signup" method="post" onsubmit="return handleSignup(event)">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="name" id="partnerName" class="form-input" placeholder="Enter your full name" required minlength="2">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" id="partnerEmail" class="form-input" placeholder="Enter email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" id="partnerPassword" class="form-input" placeholder="Create a secure password" required minlength="6">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" name="phone" id="partnerPhone" class="form-input" placeholder="Enter phone number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Vehicle Type</label>
+                    <select name="vehicleType" id="vehicleType" class="form-input" required>
+                        <option value="">Select Vehicle</option>
+                        <option value="BIKE">Bike</option>
+                        <option value="SCOOTER">Scooter</option>
+                        <option value="CAR">Car</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="login-btn" id="signupBtn">Register as Partner</button>
+            </form>
+            
+            <div class="signup-link">
+                Already have an account? <span class="signup-link-btn" onclick="closeSignupModal()">Sign in here</span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function openSignupModal() {
+            document.getElementById('signupModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeSignupModal() {
+            document.getElementById('signupModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+            clearFormErrors();
+        }
+        
+        function closeModal(event, modalId) {
+            if (event.target.classList.contains('modal')) {
+                document.getElementById(modalId).classList.remove('show');
+                document.body.style.overflow = 'auto';
+                clearFormErrors();
+            }
+        }
+        
+        function clearFormErrors() {
+            const errorMsg = document.getElementById('signupError');
+            const successMsg = document.getElementById('signupSuccess');
+            const inputs = document.querySelectorAll('.form-input');
+            
+            if (errorMsg) errorMsg.style.display = 'none';
+            if (successMsg) successMsg.style.display = 'none';
+            inputs.forEach(input => {
+                input.classList.remove('error', 'success');
+            });
+        }
+        
+        function showError(message) {
+            const errorMsg = document.getElementById('signupError');
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+        }
+        
+        function showSuccess(message) {
+            const successMsg = document.getElementById('signupSuccess');
+            successMsg.textContent = message;
+            successMsg.style.display = 'block';
+        }
+        
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        function handleSignup(event) {
+            const name = document.getElementById('partnerName').value;
+            const email = document.getElementById('partnerEmail').value;
+            const password = document.getElementById('partnerPassword').value;
+            const phone = document.getElementById('partnerPhone').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            
+            clearFormErrors();
+            
+            if (name.length < 2) {
+                event.preventDefault();
+                showError('Name must be at least 2 characters long');
+                document.getElementById('partnerName').classList.add('error');
+                return false;
+            }
+            
+            if (!validateEmail(email)) {
+                event.preventDefault();
+                showError('Please enter a valid email address');
+                document.getElementById('partnerEmail').classList.add('error');
+                return false;
+            }
+            
+            if (password.length < 6) {
+                event.preventDefault();
+                showError('Password must be at least 6 characters long');
+                document.getElementById('partnerPassword').classList.add('error');
+                return false;
+            }
+            
+            if (phone.length < 10) {
+                event.preventDefault();
+                showError('Please enter a valid phone number');
+                document.getElementById('partnerPhone').classList.add('error');
+                return false;
+            }
+            
+            if (!vehicleType) {
+                event.preventDefault();
+                showError('Please select your vehicle type');
+                document.getElementById('vehicleType').classList.add('error');
+                return false;
+            }
+            
+            const btn = document.getElementById('signupBtn');
+            btn.textContent = 'Registering Partner...';
+            btn.disabled = true;
+            
+            return true;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            
+            if (error === 'email-exists') {
+                openSignupModal();
+                showError('Email already exists. Please use a different email address.');
+            }
+            
+            if (error) {
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+    </script>
+</body>
+</html>

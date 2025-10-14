@@ -1,0 +1,47 @@
+# =======================================
+#  Foody - Spring Boot + Maven Project
+# =======================================
+
+# --- Maven build directory ---
+/target/
+
+# --- IntelliJ IDEA / Eclipse files ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+
+# --- Logs ---
+*.log
+
+# --- OS generated files ---
+.DS_Store
+Thumbs.db
+
+# --- Environment files ---
+.env
+*.local
+
+# --- Application config (keep credentials private) ---
+src/main/resources/application.properties
+
+# --- Temporary or backup files ---
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# --- Node/Frontend (if added later) ---
+node_modules/
+dist/
+
+# --- Compiled Java classes ---
+*.class
+
+# --- Build output jars/wars ---
+*.jar
+*.war
+*.ear
