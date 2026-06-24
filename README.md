@@ -4,7 +4,8 @@
 Foody is a **Spring Boot + MySQL + Thymeleaf** web application that simulates an online food delivery platform .  
 It demonstrates concepts of **Java OOP**, **Spring MVC architecture**, **JPA/Hibernate ORM**, and **dynamic front-end rendering** with Thymeleaf.
 
-A comprehensive food delivery web application built with Spring Boot, featuring time-based restaurant availability, admin management, and customer ordering system.
+## Sreenshot
+! [My screenshot](Screenshot of customer page.png)
 
 ## 🚀 Features
 
