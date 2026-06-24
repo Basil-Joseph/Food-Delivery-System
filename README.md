@@ -5,7 +5,7 @@ Foody is a **Spring Boot + MySQL + Thymeleaf** web application that simulates an
 It demonstrates concepts of **Java OOP**, **Spring MVC architecture**, **JPA/Hibernate ORM**, and **dynamic front-end rendering** with Thymeleaf.
 
 ## Sreenshot
-! [My screenshot](Screenshot of customer page.png)
+![My screenshot](Screenshot%20of%20customer%20page.png)
 
 ## 🚀 Features
 
